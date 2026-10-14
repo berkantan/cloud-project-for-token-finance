@@ -29,7 +29,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/token-payment-api:${{ github.sha }}
 
       - name: Güvenlik kontrolu yapma
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/token-payment-api:${{ github.sha }}
           severity: CRITICAL, HIGH
