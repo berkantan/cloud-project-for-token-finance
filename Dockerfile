@@ -1,5 +1,5 @@
 # GO dilinin 1.27.1 sürümünü kur.
-FROM golang:1.27.1 AS builder
+FROM golang:1.27.2 AS builder
 
 # /app olarak çalışma dizinini belirle.
 WORKDIR /app
