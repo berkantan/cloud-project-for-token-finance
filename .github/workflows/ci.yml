@@ -20,11 +20,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build alma ve gonderme
+      - name: Build alma
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
+          push: false
+          load: true
           platforms: linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/token-payment-api:${{ github.sha }}
 
@@ -35,3 +36,6 @@ jobs:
           severity: 'CRITICAL,HIGH'
           ignore-unfixed: true
           exit-code: 1
+
+      - name: Docker Hub'a gonderme
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/token-payment-api:${{ github.sha }}
