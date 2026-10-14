@@ -57,7 +57,7 @@ jobs:
           ssh -i ~/.ssh/deploy_key ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} "
             sudo docker pull $IMAGE &&
             sudo docker rm -f payment-api &&
-            sudo docker run -d --name payment-api --network monitoring -p 9093:9093 --restart unless-stopped --log-opt max-size=10m --log-opt max-file=3 $IMAGE &&
+            sudo docker run -d --name payment-api --network monitoring -p 127.0.0.1:9093:9093 --restart unless-stopped --log-opt max-size=10m --log-opt max-file=3 $IMAGE &&
             sleep 5 &&
             curl -sf localhost:9093/metrics > /dev/null &&
             echo 'Deploy başarılı'
