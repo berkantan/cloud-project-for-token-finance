@@ -6,7 +6,7 @@
 
 ## Özet
 
-Sunucunun 10 GB'lık diski tamamen doldu. Disk dolunca SSH anahtarı sunucuya yazılamadı ve sunucuya erişilemedi. Docker servisi de başlatılamadı. Disk, kurtarma VM'i üzerinden 20 GB'a genişletilerek erişim geri kazanıldı. Kök neden, multi-stage build kullanılmadan oluşturulan ve gereksiz yere büyük olan Docker imajlarıydı.
+Sunucunun 10 GB'lık diski tamamen doldu. Disk dolunca SSH anahtarı sunucuya yazılamadı ve sunucuya erişilemedi. Docker servisi de başlatılamadı. Disk, kurtarma VM'i üzerinden 20 GB'a genişletilerek tekrar ssh bağlantısı sağlandı. Kök neden, multi-stage build kullanılmadan oluşturulan ve gereksiz yere büyük olan Docker imajlarıydı.
 
 ## Etki
 

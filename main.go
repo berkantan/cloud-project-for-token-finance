@@ -31,28 +31,33 @@ func paymentHandler(w http.ResponseWriter, r *http.Request) {
 		paymentDuration.WithLabelValues(status).Observe(float64(time.Since(start).Seconds()))
 	}()
 
-	sleep_time := 100 + rand.IntN(701)
+	sleepTime := 100 + rand.IntN(701)
 	//new_generated_number := strconv.Itoa(generated_number)
 
 	//value, _ := time.ParseDuration(new_generated_number)
-	time.Sleep(time.Duration(sleep_time) * time.Millisecond)
+	time.Sleep(time.Duration(sleepTime) * time.Millisecond)
 
 	// delay test
-	// fmt.Fprintf(w, "{\"status\": \"Payment Processed successfully\", \"delay_ms\": %d}", sleep_time)
+	// fmt.Fprintf(w, "{\"status\": \"Payment Processed successfully\", \"delay_ms\": %d}", sleepTime)
 
-	err_rate_chance := rand.IntN(100)
+	errRateChance := rand.IntN(100)
 
-	if err_rate_chance < 15 {
+	if errRateChance < 2 {
 		status = "failed"
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "{\"status\": \"Payment Gateway Timeout\", \"error_code\": 500}")
+		w.WriteHeader(http.StatusGatewayTimeout)
+		fmt.Fprintf(w, "{\"status\": \"Payment Gateway Timeout\", \"error_code\": 504}")
 		paymentRequest.WithLabelValues("failed").Inc()
+	} else if errRateChance < 12 {
+		status = "declined"
+		w.WriteHeader(http.StatusPaymentRequired)
+		fmt.Fprintf(w, `{"status": "Payment declined", "reason": "insufficient_funds", "error_code": 402}`)
+		paymentRequest.WithLabelValues("declined").Inc()
+	} else {
+		paymentRequest.WithLabelValues("success").Inc()
+
 		fmt.Fprintf(w, `{"status": "Payment Processed successfully"}`)
 	}
 
-	paymentRequest.WithLabelValues("success").Inc()
-
-	fmt.Fprintf(w, `{"status": "Payment Processed successfully"}`)
 }
 
 func main() {
