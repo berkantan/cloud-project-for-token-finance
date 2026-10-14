@@ -32,6 +32,6 @@ jobs:
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/token-payment-api:${{ github.sha }}
-          severity: CRITICAL, HIGH
+          severity: ["CRITICAL" "HIGH"]
           ignore-unfixed: true
           exit-code: 1
