@@ -62,7 +62,7 @@ func paymentHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/pay", paymentHandler)
+	http.HandleFunc("POST /pay", paymentHandler)
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(":9093", nil)
 }
